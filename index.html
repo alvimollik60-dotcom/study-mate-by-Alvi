@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study mate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-section" class="view-section active-section">
+        <div class="login-box">
+            <h2 class="theme-text">লগইন করুন</h2>
+            <input type="text" id="login-username" placeholder="ইউজারনেম">
+            <input type="password" id="login-password" placeholder="পাসওয়ার্ড">
+            <button onclick="login()" class="theme-btn">প্রবেশ করুন</button>
+            <p id="login-error" class="error-msg"></p>
+        </div>
+    </div>
+
+    <div id="app-section" class="view-section">
+        
+        <nav class="navbar">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="nav-center">
+                <h1 class="logo"><span>Study</span> mate</h1>
+            </div>
+            <div class="nav-right">
+                <span id="user-display"></span>
+            </div>
+        </nav>
+
+        <div class="sidebar hide" id="sidebar">
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('home-page', this)"><i class="fa-solid fa-house"></i> হোম</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('self-tracker-page', this)"><i class="fa-solid fa-stopwatch"></i> সেল্ফ ট্র্যাকার</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('subject-tracker-page', this)"><i class="fa-solid fa-book-bookmark"></i> সাবজেক্ট ওয়াইজ ট্র্যাকার</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('subject-resource-page', this)"><i class="fa-solid fa-folder-tree"></i> সাবজেক্ট রিসোর্স</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('session-report-page', this)"><i class="fa-solid fa-chart-pie"></i> সেশন রিপোর্ট</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('syllabus-tracker-page', this)"><i class="fa-solid fa-book-open"></i> সিলেবাস ট্র্যাকার</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('public-dashboard-page', this)"><i class="fa-solid fa-gauge-high"></i> পাবলিক ড্যাশবোর্ড</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('leaderboard-page', this)"><i class="fa-solid fa-trophy"></i> লিডারবোর্ড</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('daily-task-page', this)"><i class="fa-solid fa-list-check"></i> ডেইলি টাস্ক</a>
+            <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('pdf-reader-page', this)"><i class="fa-solid fa-folder-open"></i> PDF ও স্টোরেজ</a>
+            <a href="https://t.me/+dJXyizD3FB04NjI1" target="_blank" class="sidebar-item telegram-link"><i class="fa-brands fa-telegram" style="color: #24A1DE;"></i> টেলিগ্রাম</a>
+            
+            <div id="dynamic-links-sidebar-container"></div>
+
+            <a href="javascript:void(0);" class="sidebar-item admin-only" id="admin-menu-item" style="display: none;" onclick="showPage('admin-page', this)"><i class="fa-solid fa-user-shield"></i> অ্যাডমিন প্যানেল</a>
+            <a href="javascript:void(0);" class="sidebar-item logout-link" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> লগআউট</a>
+        </div>
+
+        <div class="container" id="main-container">
+            
+            <div id="home-page" class="page-content">
+                <div class="welcome-box">
+                    <h1 id="welcome-username" class="huge-username">ইউজার</h1>
+                    <h2 id="welcome-message" class="theme-text">Study mate এ সবাইকে স্বাগতম!</h2>
+                    <p>তোমার প্রতিদিনের কাজ এবং পড়াশোনার ট্র্যাক রাখতে বাঁ দিকের মেনু বাটনটি ব্যবহার করো</p>
+                </div>
+                <div id="home-custom-notice-box" class="custom-notice-container">
+                    <p id="notice-display-text">নোটিশ লোড হচ্ছে...</p>
+                </div>
+            </div>
+
+            <div id="self-tracker-page" class="page-content">
+                <p class="subtitle">আপনার বর্তমান কার্যক্রম ট্র্যাক করুন</p>
+                <main class="tracker-card">
+                    <p class="current-status">বর্তমানে: <span id="current-activity-name">Sports</span></p>
+                    <div class="timer" id="main-timer">00:00:00</div>
+                    <button class="stop-btn theme-btn">শুরু করুন</button>
+                    <div class="activity-grid">
+                        <div class="card" onclick="selectActivity('Self Study', this)"><i class="fa-solid fa-user-graduate icon"></i><h3>Self Study</h3><div class="time">00:00:00</div></div>
+                        <div class="card" onclick="selectActivity('Class/Mock Test', this)"><i class="fa-solid fa-laptop-code icon"></i><h3>Class/Mock Test</h3><div class="time">00:00:00</div></div>
+                        <div class="card" onclick="selectActivity('Mobile scroll', this)"><i class="fa-solid fa-mobile-screen-button icon"></i><h3>Mobile scroll</h3><div class="time">00:00:00</div></div>
+                        <div class="card" onclick="selectActivity('Prayer', this)"><i class="fa-solid fa-hands-praying icon"></i><h3>Prayer</h3><div class="time">00:00:00</div></div>
+                        <div class="card" onclick="selectActivity('Food', this)"><i class="fa-solid fa-utensils icon"></i><h3>Food</h3><div class="time">00:00:00</div></div>
+                        <div class="card" onclick="selectActivity('Sleep', this)"><i class="fa-solid fa-bed icon"></i><h3>Sleep</h3><div class="time">00:00:00</div></div>
+                        <div class="card" onclick="selectActivity('Sports', this)"><i class="fa-solid fa-person-running icon"></i><h3>Sports</h3><div class="time">00:00:00</div></div>
+                        <div class="card" onclick="selectActivity('Other', this)"><i class="fa-solid fa-briefcase icon"></i><h3>Other</h3><div class="time">00:00:00</div></div>
+                    </div>
+                </main>
+            </div>
+
+            <div id="subject-tracker-page" class="page-content">
+                <h2>সাবজেক্ট ওয়াইজ ট্র্যাকার ও পোমোডোরো</h2>
+                <p class="subtitle">ব্যাকগ্রাউন্ডে সাবজেক্ট ট্র্যাকার চালু রেখে একই সাথে পোমোডোরো টাইমার ব্যবহার করুন</p>
+                <div class="dual-tracker-layout">
+                    <div class="tracker-column-box">
+                        <div class="box-header-title"><i class="fa-solid fa-book"></i> ১. সাবজেক্ট ওয়াইজ ট্র্যাকার</div>
+                        <div style="margin: 15px 0;">
+                            <label for="track-subject-dropdown" style="font-size:0.9rem; color:#94a3b8;">বিষয় নির্বাচন করুন: </label>
+                            <select id="track-subject-dropdown" class="admin-link-input-style" style="width:100%; margin-top:5px;"></select>
+                        </div>
+                        <div class="timer" id="subject-main-timer" style="color: #10b981;">00:00:00</div>
+                        <button id="subject-timer-toggle-btn" onclick="toggleSubjectTimer()" class="theme-btn" style="width:100%; padding:10px; border-radius:6px; font-weight:bold;">সাবজেক্ট স্টাডি শুরু করুন</button>
+                        <div class="subject-mini-logs-list" id="subject-today-logs-box" style="margin-top: 15px; text-align: left; background: var(--theme-bg); padding: 10px; border-radius: 6px; font-size: 0.85rem; border: 1px solid #334155;"></div>
+                    </div>
+
+                    <div class="tracker-column-box">
+                        <div class="box-header-title"><i class="fa-solid fa-clock-rotate-left"></i> ২. কাস্টম পোমোডোরো টাইমার</div>
+                        <div class="pomodoro-setup-inputs" style="display:flex; gap:8px; margin:15px 0;">
+                            <input type="number" id="pomo-custom-minutes" value="25" min="1" max="180" class="admin-link-input-style" style="flex:1; text-align:center;" placeholder="মিনিট">
+                            <button onclick="setCustomPomodoroTime()" class="theme-btn" style="padding:0 12px; border-radius:4px; font-size:0.85rem;">সেট</button>
+                        </div>
+                        <div class="timer" id="pomodoro-display-timer" style="color: #f43f5e;">25:00</div>
+                        <div style="display:flex; gap:10px;">
+                            <button id="pomo-start-btn" onclick="togglePomodoroTimer()" class="theme-btn" style="flex:2; padding:8px; border-radius:6px; font-weight:bold; background:#10b981 !important;">স্টার্ট পোমোডোরো</button>
+                            <button onclick="resetPomodoroTimer()" style="flex:1; padding:8px; border-radius:6px; background:#64748b; color:white; border:none; cursor:pointer; font-weight:bold;">রিসেট</button>
+                        </div>
+                        <p id="pomo-status-text" style="font-size:0.85rem; margin-top:12px; color:#eab308; font-style:italic;">টাইমার বন্ধ আছে</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="subject-resource-page" class="page-content">
+                <h2>সাবজেক্ট রিসোর্স ও লিংকস</h2>
+                <p class="subtitle">নিচের যেকোনো বিষয়ে ক্লিক করে তার ভেতরের গুরুত্বপূর্ণ লিংকগুলো সরাসরি ওপেন করুন</p>
+                <div class="subject-resource-grid" id="resource-subject-list"></div>
+                <div id="subject-links-display-box" style="display: none; margin-top: 25px; background: var(--theme-card-bg); padding: 20px; border-radius: 10px; border: 1px solid #334155;">
+                    <h3 id="current-resource-subject-title" style="color: var(--theme-btn-bg); margin-bottom: 15px;">সাবজেক্ট এর নাম</h3>
+                    <div id="resource-links-container" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                </div>
+            </div>
+
+            <div id="session-report-page" class="page-content">
+                <h2>সেশন রিপোর্ট ড্যাশবোর্ড</h2>
+                <p class="subtitle">ক্যালেন্ডারের যেকোনো তারিখে ক্লিক করে ওই দিনের ডাটা দেখুন</p>
+                <div class="report-layout">
+                    <div class="report-left">
+                        <div class="summary-card">
+                            <p>তারিখ: <span id="selected-date-display" style="color: var(--theme-btn-bg); font-weight: bold;">-</span></p>
+                            <div class="total-usage-box">
+                                <small>মোট ব্যবহার</small>
+                                <h2 id="report-total-time">0h 0m</h2>
+                            </div>
+                        </div>
+                        <div class="chart-container-box">
+                            <div class="donut-chart" id="report-donut-chart">
+                                <div class="donut-inner" id="donut-center-text">No Data</div>
+                            </div>
+                        </div>
+                        <div class="category-grid-report">
+                            <div class="rep-card" style="border-left: 3px solid #3b82f6;"><i class="fa-solid fa-user-graduate"></i> <span>Self Study</span> <strong id="rep-time-SelfStudy">0m</strong></div>
+                            <div class="rep-card" style="border-left: 3px solid #10b981;"><i class="fa-solid fa-laptop-code"></i> <span>Class</span> <strong id="rep-time-ClassMockTest">0m</strong></div>
+                            <div class="rep-card" style="border-left: 3px solid #f43f5e;"><i class="fa-solid fa-mobile-screen-button"></i> <span>Mobile Scroll</span> <strong id="rep-time-Mobilescroll">0m</strong></div>
+                            <div class="rep-card" style="border-left: 3px solid #eab308;"><i class="fa-solid fa-hands-praying"></i> <span>Prayer</span> <strong id="rep-time-Prayer">0m</strong></div>
+                            <div class="rep-card" style="border-left: 3px solid #a855f7;"><i class="fa-solid fa-utensils"></i> <span>Food</span> <strong id="rep-time-Food">0m</strong></div>
+                            <div class="rep-card" style="border-left: 3px solid #6366f1;"><i class="fa-solid fa-bed"></i> <span>Sleep</span> <strong id="rep-time-Sleep">0m</strong></div>
+                            <div class="rep-card" style="border-left: 3px solid #06b6d4;"><i class="fa-solid fa-person-running"></i> <span>Sports</span> <strong id="rep-time-Sports">0m</strong></div>
+                            <div class="rep-card" style="border-left: 3px solid #64748b;"><i class="fa-solid fa-briefcase"></i> <span>Other</span> <strong id="rep-time-Other">0m</strong></div>
+                        </div>
+                    </div>
+                    <div class="report-right">
+                        <div class="calendar-wrapper">
+                            <div class="calendar-header-nav">
+                                <button onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                                <h3 id="calendar-month-year">Month Year</h3>
+                                <button onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-weekdays">
+                                <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                            </div>
+                            <div class="calendar-days" id="calendar-days-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="syllabus-tracker-page" class="page-content">
+                <h2>সিলেবাস ও সাব-ইউনিট ট্র্যাকার</h2>
+                <p class="subtitle" id="syllabus-subtitle">বিষয় সিলেক্ট করে আপনার প্রোগ্রেস ট্র্যাক করুন</p>
+                <div class="sub-select-box">
+                    <label for="sub-dropdown">বিষয়: </label>
+                    <select id="sub-dropdown" onchange="selectSubject(this.value)"></select>
+                </div>
+                <div class="add-box-container admin-editable-content" id="admin-chapter-form" style="display: none;">
+                    <input type="text" id="new-chapter-input" placeholder="নতুন অধ্যায়ের নাম...">
+                    <button class="add-btn-main theme-btn" onclick="addMainChapter()">যোগ করুন</button>
+                </div>
+                <div id="syllabus-nested-container"></div>
+            </div>
+
+            <div id="public-dashboard-page" class="page-content">
+                <h2>পাবলিক স্টাডি ড্যাশবোর্ড</h2>
+                <p class="subtitle">গ্রুপের সকল মেম্বারদের আজকের লাইভ অ্যাক্টিভিটি এবং স্ট্যাটাস</p>
+                <div class="activity-grid" id="public-dashboard-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; margin-top: 20px;">
+                    <p>লোড হচ্ছে...</p>
+                </div>
+            </div>
+
+            <div id="leaderboard-page" class="page-content">
+                <h2>গ্রুপ লিডারবোর্ড (আজকের টপ স্টাডিয়ার্স)</h2>
+                <p class="subtitle">আজকে কে কত সময় পড়াশোনা করলো তা রিয়েল-টাইমে দেখুন</p>
+                <div style="overflow-x: auto;">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>রั্যাংক</th>
+                                <th>ইউজারনেম</th>
+                                <th>মোট পড়াশোনা (Self Study + Class)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-table-body">
+                            <tr><td colspan="3">লোড হচ্ছে...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="daily-task-page" class="page-content">
+                <h2>আজকের DAILY TASK / রুটিন</h2>
+                <p class="subtitle">অ্যাডমিন কর্তৃক নির্ধারিত আজকের লক্ষ্য এবং রুটিন</p>
+                <div id="daily-task-display-box" class="custom-notice-container" style="border-color: #eab308; text-align: left; white-space: pre-wrap;">
+                    টাস্ক লোড হচ্ছে...
+                </div>
+                <div class="admin-setting-card admin-only" id="admin-task-form" style="display: none; margin-top: 20px;">
+                    <h3><i class="fa-solid fa-edit"></i> ডেইলি টাস্ক আপডেট করুন (Admin Only)</h3>
+                    <textarea id="admin-task-input" placeholder="আজকের রুটিন এখানে লিখুন..." rows="4" style="width: 100%; padding: 8px; background: #111827; color: #fff; border: 1px solid #334155; border-radius: 6px; margin-bottom: 10px;"></textarea>
+                    <button onclick="saveDailyTaskSetting()" class="theme-btn" style="padding: 6px 15px;">টাস্ক পোস্ট করুন</button>
+                </div>
+            </div>
+
+            <div id="pdf-reader-page" class="page-content">
+                <h2>ফাইল ও স্টোরেজ সোর্স</h2>
+                <p class="subtitle">আপনার পছন্দসই সোর্স থেকে ফাইল বা পিডিএফ ওপেন করার অপশন বেছে নিন</p>
+                <div class="storage-options-container">
+                    <div class="storage-button-card color-drive" onclick="openGoogleDrive()">
+                        <div class="storage-icon"><i class="fa-brands fa-google-drive"></i></div>
+                        <h3>1. Drive</h3>
+                        <p>আপনার ফোন বা পিসির গুগল ড্রাইভ ক্লাউড স্টোরেজ ওপেন করুন</p>
+                    </div>
+                    <div class="storage-button-card color-file" onclick="triggerLocalFilePicker()">
+                        <div class="storage-icon"><i class="fa-solid fa-folder-closed"></i></div>
+                        <h3>2. File</h3>
+                        <p>আপনার ফোন বা পিসির লোকাল ফাইল ম্যানেজার স্টোরেজ ওপেন করুন</p>
+                    </div>
+                </div>
+                <input type="file" id="hidden-local-file-picker" accept="application/pdf, image/*" style="display: none;" onchange="handleLocalFileSelect(event)">
+                <div id="file-status-box" class="file-status-notification" style="display: none;"></div>
+            </div>
+
+            <div id="admin-page" class="page-content">
+                <h2>ইউজার ম্যানেজমেন্ট ও সেটিংস</h2>
+                
+                <div class="admin-setting-card" style="margin-bottom: 20px;">
+                    <h3><i class="fa-solid fa-folder-plus"></i> সাবজেক্ট ভিত্তিক লিংক ম্যানেজমেন্ট (Admin Only)</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+                        <select id="admin-resource-sub-dropdown" class="admin-link-input-style" style="flex: 1; min-width: 150px;"></select>
+                        <input type="text" id="admin-resource-title" placeholder="লিংকের দৃশ্যমান নাম" class="admin-link-input-style" style="flex: 2; min-width: 200px;">
+                        <input type="url" id="admin-resource-url" placeholder="লুকানো URL (https://...)" class="admin-link-input-style" style="flex: 2; min-width: 200px;">
+                        <button onclick="addSubjectResourceLink()" class="theme-btn" style="padding: 8px 15px;">যোগ করুন</button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table class="user-table" style="margin-top: 5px;">
+                            <thead>
+                                <tr><th>বিষয়</th><th>নাম (Title)</th><th>লুকানো লিংক (URL)</th><th>অ্যাকশন</th></tr>
+                            </thead>
+                            <tbody id="admin-resource-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-setting-card" style="margin-bottom: 20px;">
+                    <h3><i class="fa-solid fa-link"></i> ডায়নামিক এক্সটার্নাল লিংক সেটিংস</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+                        <input type="text" id="admin-link-title" placeholder="লিংকের নাম" class="admin-link-input-style" style="flex: 1; min-width: 150px;">
+                        <input type="url" id="admin-link-url" placeholder="https://..." class="admin-link-input-style" style="flex: 2; min-width: 200px;">
+                        <button onclick="addDynamicExternalLink()" class="theme-btn" style="padding: 8px 15px;">যোগ করুন</button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table class="user-table">
+                            <thead><tr><th>নাম</th><th>ইউআরএল (URL)</th><th>অ্যাকশন</th></tr></thead>
+                            <tbody id="admin-links-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-setting-card" style="margin-bottom: 20px;">
+                    <h3><i class="fa-solid fa-message"></i> হোম পেজ কাস্টম বক্স নোটিশ সেটিংস</h3>
+                    <textarea id="notice-input-text" placeholder="নোটিশ এখানে লিখুন..." rows="3" style="width: 100%; padding: 8px; background: #111827; color: #fff; border: 1px solid #334155; border-radius: 6px; margin-bottom: 10px;"></textarea>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+                        <label>কালার: </label><input type="color" id="notice-color-picker" value="#ffffff">
+                        <label>সাইজ (px): </label><input type="number" id="notice-size-picker" value="16" min="12" max="40" style="width: 70px; background:#111827; color:white; border:1px solid #334155;">
+                    </div>
+                    <button onclick="saveNoticeSettings()" class="theme-btn" style="padding: 6px 15px;">বক্স আপডেট করুন</button>
+                </div>
+
+                <div class="admin-setting-card" style="margin-bottom: 20px;">
+                    <h3><i class="fa-solid fa-palette"></i> ওয়েবসাইট কালার থিম</h3>
+                    <div class="theme-picker-grid">
+                        <div class="picker-item"><label>মূল ব্যাকগ্রাউন্ড:</label> <input type="color" id="color-bg" value="#111827"></div>
+                        <div class="picker-item"><label>কার্ড ব্যাকগ্রাউন্ড:</label> <input type="color" id="color-card" value="#1e293b"></div>
+                        <div class="picker-item"><label>বাটন কালার:</label> <input type="color" id="color-btn" value="#3b82f6"></div>
+                        <div class="picker-item"><label>টেক্সট কালার:</label> <input type="color" id="color-text" value="#ffffff"></div>
+                    </div>
+                    <button onclick="saveThemeSettings()" class="theme-btn" style="margin-top: 12px; padding: 6px 15px;">থিম সেভ করুন</button>
+                </div>
+
+                <div class="admin-setting-card">
+                    <h3><i class="fa-solid fa-clock"></i> দিন পরিবর্তনের বাউন্ডারি সময়</h3>
+                    <div class="time-input-group">
+                        <input type="time" id="day-start-time"><button onclick="saveDayStartSetting()" class="theme-btn">সেভ করুন</button>
+                    </div>
+                </div>
+
+                <div class="add-user-box" style="margin-top: 20px;">
+                    <input type="text" id="new-username" placeholder="ইউজারনেম">
+                    <input type="text" id="new-password" placeholder="পাসওয়ার্ড">
+                    <button onclick="addUser()" class="theme-btn">ইউজার তৈরি করুন</button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="user-table"><tbody id="user-table-body"></tbody></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDN4Yv4Ufxm6IsmpKv2ViO95_fHgZq_dgY",
+            authDomain: "study-mate-6a5ee.firebaseapp.com",
+            projectId: "study-mate-6a5ee",
+            storageBucket: "study-mate-6a5ee.firebasestorage.app",
+            messagingSenderId: "820457978978",
+            appId: "1:820457978978:web:f228f86a8a213c631ea53b",
+            measurementId: "G-TMEN94CMKR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+        window.fbSignIn = signInWithEmailAndPassword;
+        window.fbCreateUser = createUserWithEmailAndPassword;
+        window.fbFirestore = { doc, setDoc, getDoc, collection, getDocs, deleteDoc, onSnapshot };
+
+        window.login = login;
+        window.logout = logout;
+        window.selectActivity = selectActivity;
+        window.toggleSubjectTimer = toggleSubjectTimer;
+        window.setCustomPomodoroTime = setCustomPomodoroTime;
+        window.togglePomodoroTimer = togglePomodoroTimer;
+        window.resetPomodoroTimer = resetPomodoroTimer;
+        window.showResourceLinksForSubject = showResourceLinksForSubject;
+        window.addSubjectResourceLink = addSubjectResourceLink;
+        window.deleteSubjectResourceLink = deleteSubjectResourceLink;
+        window.selectSubject = selectSubject;
+        window.toggleSubunitTick = toggleSubunitTick;
+        window.deleteSubunit = deleteSubunit;
+        window.deleteMainChapter = deleteMainChapter;
+        window.toggleChapter = toggleChapter;
+        window.addSubunit = addSubunit;
+        window.addMainChapter = addMainChapter;
+        window.saveDailyTaskSetting = saveDailyTaskSetting;
+        window.openGoogleDrive = openGoogleDrive;
+        window.triggerLocalFilePicker = triggerLocalFilePicker;
+        window.handleLocalFileSelect = handleLocalFileSelect;
+        window.deleteDynamicExternalLink = deleteDynamicExternalLink;
+        window.addDynamicExternalLink = addDynamicExternalLink;
+        window.deleteLiveUser = deleteLiveUser;
+        window.addUser = addUser;
+        window.saveDayStartSetting = saveDayStartSetting;
+        window.changeMonth = changeMonth;
+        window.loadReportForDate = loadReportForDate;
+        window.saveThemeSettings = saveThemeSettings;
+        window.saveNoticeSettings = saveNoticeSettings;
+        window.renderPublicDashboard = renderPublicDashboard;
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

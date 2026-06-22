@@ -1,0 +1,221 @@
+/* রুটের ডিফল্ট ভ্যারিয়েবল */
+:root {
+    --theme-bg: #111827;
+    --theme-card-bg: #1e293b;
+    --theme-btn-bg: #3b82f6;
+    --theme-text-color: #ffffff;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+body { 
+    background-color: var(--theme-bg); 
+    color: var(--theme-text-color); 
+    min-height: 100vh; 
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* গ্লোবাল ডাইনামিক থিম ক্লাস */
+.theme-text { color: var(--theme-btn-bg) !important; }
+.theme-btn { background-color: var(--theme-btn-bg) !important; color: white; border: none; cursor: pointer; transition: 0.2s; }
+.theme-btn:hover { filter: brightness(1.2); }
+
+/* ভিউ কন্ট্রোল */
+.view-section { display: none !important; }
+.view-section.active-section#login-section { 
+    display: flex !important; justify-content: center; align-items: center; height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; background-color: var(--theme-bg); z-index: 2000; padding: 20px; 
+}
+.view-section.active-section#app-section { display: block !important; padding-top: 60px; }
+.page-content { display: none !important; }
+.page-content.active-page { display: block !important; }
+
+/* লগইন পেজ */
+.login-box { background: var(--theme-card-bg); padding: 40px 25px; border-radius: 12px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.4); border: 1px solid #334155; }
+.login-box h2 { margin-bottom: 25px; font-size: 1.8rem; font-weight: 600; }
+.login-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #334155; border-radius: 6px; background: var(--theme-bg); color: white; font-size: 1rem; }
+.login-box input:focus { border-color: var(--theme-btn-bg); outline: none; }
+.login-box button { width: 100%; padding: 12px; border-radius: 6px; font-size: 1rem; font-weight: 600; margin-top: 5px; }
+.error-msg { color: #ef4444; font-size: 0.85rem; margin-top: 10px; font-weight: 500; }
+
+/* নেভিগেশন বার */
+.navbar { position: fixed; top: 0; left: 0; width: 100%; height: 55px; background-color: var(--theme-card-bg); border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 1000; }
+.nav-left, .nav-right { width: 25%; display: flex; align-items: center; }
+.nav-right { justify-content: flex-end; }
+.nav-center { width: 50%; text-align: center; }
+.menu-toggle { background: none; border: none; color: white; font-size: 1.3rem; cursor: pointer; padding: 5px; }
+.logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.logo span { color: var(--theme-btn-bg); }
+#user-display { background: #334155; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; border: 1px solid #475569; }
+
+/* সাইডবার মেনু */
+.sidebar { position: fixed; top: 55px; left: 0; width: 230px; height: calc(100vh - 55px); background-color: var(--theme-card-bg); border-right: 1px solid #334155; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); z-index: 999; transform: translateX(0); overflow-y: auto; padding-top: 10px; }
+.sidebar.hide { transform: translateX(-230px) !important; }
+.sidebar-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 0.95rem; font-weight: 500; border-left: 3px solid transparent; transition: 0.15s; }
+.sidebar-item:hover, .sidebar-item.active-nav { background-color: #334155; color: var(--theme-btn-bg); border-left-color: var(--theme-btn-bg); }
+.sidebar-item i { width: 20px; font-size: 1.1rem; text-align: center; }
+.logout-link { color: #ef4444; margin-top: 20px; border-top: 1px solid #334155; padding-top: 15px; }
+.logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+/* মেইন এরিয়া কন্টেইনার ফিক্স */
+.container { 
+    max-width: 1200px; 
+    margin: 15px auto; 
+    padding: 20px; 
+    transition: margin-left 0.25s, max-width 0.25s; 
+}
+
+/* পিসি বা বড় স্ক্রিনে সাইডবার খোলা থাকলে কন্টেন্ট ডানে সরানোর নিয়ম */
+@media (min-width: 992px) { 
+    #sidebar:not(.hide) ~ #main-container { 
+        margin-left: 245px; /* সাইডবার এর ২৩০পিএক্স + ১৫পিএক্স এক্সট্রা গ্যাপ */
+        max-width: calc(100% - 250px);
+    }
+}
+
+/* নতুন রেসপনসিভ সাবজেক্ট রিসোর্স লকিং গ্রিড সিস্টেম */
+.subject-resource-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+/* ডুয়াল লেআউট (সাবজেক্ট ট্র্যাকার ও পোমোডোরো) */
+.dual-tracker-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 15px; }
+.tracker-column-box { background: var(--theme-card-bg); border: 1px solid #334155; padding: 20px; border-radius: 10px; text-align: center; }
+.box-header-title { font-size: 1.1rem; font-weight: bold; color: var(--theme-btn-bg); padding-bottom: 8px; border-bottom: 1px solid #334155; text-align: left; }
+.admin-link-input-style { width: 100%; padding: 10px; background: #111827; color: white; border: 1px solid #334155; border-radius: 6px; font-size: 0.9rem; }
+.admin-link-input-style:focus { border-color: var(--theme-btn-bg); outline: none; }
+
+.custom-notice-container { background: var(--theme-card-bg); border: 1px dashed var(--theme-btn-bg); padding: 25px; border-radius: 8px; margin-top: 20px; text-align: center; line-height: 1.6; }
+
+@media (max-width: 991px) { 
+    .sidebar { transform: translateX(-230px); } 
+    .sidebar:not(.hide) { transform: translateX(0) !important; } 
+}
+
+/* হোম ও সেল্ফ ট্র্যাকার কার্ডস */
+.welcome-box { text-align: center; background: var(--theme-card-bg); padding: 40px 20px; border-radius: 12px; border: 1px solid #334155; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.huge-username { font-size: 2.6rem; color: var(--theme-btn-bg); font-weight: 700; margin-bottom: 5px; }
+.subtitle { color: #9ca3af; font-size: 0.9rem; margin-bottom: 20px; font-weight: 500; }
+.tracker-card { background: var(--theme-card-bg); padding: 25px; border-radius: 12px; text-align: center; border: 1px solid #334155; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.current-status { font-size: 1.1rem; font-weight: 500; }
+.current-status span { color: var(--theme-btn-bg); font-weight: bold; }
+.timer { font-size: 3rem; font-weight: 700; margin: 20px 0; font-family: monospace; letter-spacing: 1px; color: #cbd5e1; }
+.stop-btn { padding: 10px 35px; border-radius: 25px; font-size: 1rem; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+/* অ্যাক্টিভিটি গ্রিড */
+.activity-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 25px; }
+.card { background: var(--theme-bg); padding: 15px 10px; border-radius: 8px; cursor: pointer; border: 1px solid #334155; text-align: center; transition: transform 0.15s, background 0.2s; }
+.card:hover { transform: translateY(-2px); border-color: var(--theme-btn-bg); }
+.card.active { background: #f43f5e !important; border-color: #f43f5e !important; }
+.card.active .time, .card.active h3, .card.active i { color: white !important; }
+.card i { font-size: 1.5rem; margin-bottom: 8px; color: var(--theme-btn-bg); }
+.card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; color: #e2e8f0; }
+.card .time { font-size: 0.8rem; color: #64748b; font-weight: 500; font-family: monospace; }
+
+/* সেশন রিপোর্ট লেআউট */
+.report-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; margin-top: 15px; }
+.summary-card { background: var(--theme-card-bg); padding: 15px 20px; border-radius: 10px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+.summary-card p { font-size: 1rem; font-weight: 500; color: #94a3b8; }
+.total-usage-box { background: #ef4444; padding: 8px 18px; border-radius: 8px; text-align: right; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); }
+.total-usage-box small { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: #fee2e2; display: block; }
+.total-usage-box h2 { font-size: 1.4rem; font-weight: 700; color: white; font-family: monospace; }
+.chart-container-box { background: var(--theme-card-bg); padding: 20px; border-radius: 10px; border: 1px solid #334155; display: flex; justify-content: center; align-items: center; min-height: 170px; }
+.donut-chart { width: 140px; height: 140px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); transition: background 0.3s; }
+.donut-inner { width: 100px; height: 100px; background: var(--theme-card-bg); border-radius: 50%; font-size: 0.8rem; font-weight: 600; color: #cbd5e1; display: flex; justify-content: center; align-items: center; text-align: center; padding: 5px; }
+.category-grid-report { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.rep-card { background: var(--theme-card-bg); padding: 12px 15px; border-radius: 8px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+.rep-card span { color: #94a3b8; font-weight: 500; }
+.rep-card strong { font-family: monospace; font-size: 0.95rem; color: #f1f5f9; }
+
+/* ক্যালেন্ডার মডিউল */
+.calendar-wrapper { background: var(--theme-card-bg); border: 1px solid #334155; border-radius: 10px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.calendar-header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.calendar-header-nav h3 { font-size: 1.05rem; font-weight: 600; color: #f1f5f9; }
+.calendar-header-nav button { background: #334155; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
+.calendar-header-nav button:hover { background: var(--theme-btn-bg); }
+.calendar-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+.calendar-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+.calendar-days div { padding: 10px 0; background: var(--theme-bg); border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.15s; border: 1px solid transparent; color: #cbd5e1; }
+.calendar-days div:hover:not(.empty-cell) { border-color: var(--theme-btn-bg); color: var(--theme-btn-bg); }
+.calendar-days div.active-date { background: #ef4444 !important; color: white !important; box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4); }
+.calendar-days div.has-data { border-color: #10b981; color: #10b981; }
+.calendar-days div.empty-cell { background: transparent; cursor: default; }
+
+/* সিলেবাস ট্র্যাকার */
+.sub-select-box { background: var(--theme-card-bg); padding: 12px; border-radius: 8px; border: 1px solid #334155; display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+.sub-select-box label { font-size: 0.95rem; font-weight: 600; color: #94a3b8; }
+.sub-select-box select { flex: 1; padding: 8px; background: var(--theme-bg); color: white; border: 1px solid #475569; border-radius: 6px; font-size: 0.95rem; }
+.sub-select-box select:focus { border-color: var(--theme-btn-bg); outline: none; }
+.add-box-container { display: flex; gap: 10px; margin-bottom: 20px; }
+.add-box-container input { flex: 1; padding: 10px; background: var(--theme-card-bg); border: 1px solid #334155; color: white; border-radius: 6px; font-size: 0.9rem; }
+.add-box-container input:focus { border-color: var(--theme-btn-bg); outline: none; }
+.add-box-container button { padding: 0 20px; border-radius: 6px; font-weight: 600; }
+
+.chapter-block { background: var(--theme-card-bg); border: 1px solid #334155; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.chapter-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid #334155; }
+.chapter-title { font-size: 1.05rem; font-weight: 600; color: #f1f5f9; }
+.chapter-block.collapsed .subunit-container, .chapter-block.collapsed .add-subunit-form { display: none !important; }
+.chapter-block.collapsed { padding-bottom: 15px; }
+.chapter-block.collapsed .chapter-header { border-bottom: none; padding-bottom: 0; }
+.subunit-container { background: var(--theme-bg); padding: 5px 15px; border-radius: 8px; margin-top: 12px; border: 1px solid #1e293b; }
+.subunit-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #1e293b; font-size: 0.9rem; }
+.subunit-item:last-child { border-bottom: none; }
+.subunit-left { display: flex; align-items: center; gap: 10px; }
+.subunit-left input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--theme-btn-bg); }
+.subunit-item.completed span { text-decoration: line-through; color: #64748b; }
+.add-subunit-form { display: flex; gap: 8px; margin-top: 12px; padding: 0 5px; }
+.add-subunit-form input { flex: 1; padding: 6px 10px; background: var(--theme-bg); color: white; border: 1px solid #475569; border-radius: 4px; font-size: 0.85rem; }
+.add-subunit-form input:focus { border-color: var(--theme-btn-bg); outline: none; }
+.add-subunit-form button { background: #475569; color: white; border: none; padding: 0 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+.add-subunit-form button:hover { background: var(--theme-btn-bg); }
+.delete-btn-icon { background: none; border: none; color: #ef4444; cursor: pointer; padding: 4px; font-size: 0.95rem; opacity: 0.8; transition: opacity 0.2s; }
+.delete-btn-icon:hover { opacity: 1; color: #f87171; }
+
+/* ফাইল সোর্স ও স্টোরেজ অপশন */
+.storage-options-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 15px; }
+.storage-button-card { background: var(--theme-card-bg); border: 1px solid #334155; padding: 30px 20px; border-radius: 12px; text-align: center; cursor: pointer; transition: transform 0.2s, border-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.storage-button-card:hover { transform: translateY(-3px); }
+.storage-button-card.color-drive:hover { border-color: #eab308; }
+.storage-button-card.color-file:hover { border-color: #10b981; }
+.storage-icon { font-size: 2.2rem; margin-bottom: 12px; }
+.color-drive .storage-icon { color: #eab308; }
+.color-file .storage-icon { color: #10b981; }
+.storage-button-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+.storage-button-card p { font-size: 0.85rem; color: #9ca3af; line-height: 1.4; }
+.file-status-notification { padding: 12px 20px; background: var(--theme-bg); border-left: 4px solid #10b981; border-radius: 0 6px 6px 0; text-align: left; margin-top: 20px; font-size: 0.9rem; border-top: 1px solid #1e293b; border-right: 1px solid #1e293b; border-bottom: 1px solid #1e293b; }
+
+/* অ্যাডমিন প্যানেল এবং কন্ট্রোল সেটিংস */
+.admin-setting-card { background: var(--theme-card-bg); border: 1px solid #334155; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.admin-setting-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; color: #f1f5f9; display: flex; align-items: center; gap: 8px; }
+.theme-picker-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px; }
+.picker-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: var(--theme-bg); border-radius: 6px; border: 1px solid #1e293b; font-size: 0.9rem; color: #cbd5e1; }
+.picker-item input[type="color"] { border: none; width: 35px; height: 25px; border-radius: 4px; cursor: pointer; background: transparent; }
+
+.time-input-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 8px; font-size: 0.9rem; }
+.time-input-group input[type="time"] { padding: 6px; background: var(--theme-bg); color: white; border: 1px solid #334155; border-radius: 4px; }
+.add-user-box { display: flex; gap: 8px; }
+.add-user-box input { flex: 1; padding: 8px; background: var(--theme-card-bg); border: 1px solid #334155; color: white; border-radius: 4px; }
+.user-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: var(--theme-card-bg); font-size: 0.85rem; }
+.user-table th, .user-table td { padding: 10px; border: 1px solid #334155; text-align: left; }
+.user-table th { background: #334155; }
+.kick-btn { background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+
+/* মিডিয়া কোয়েরি রেসপনসিভনেস ম্যানেজার */
+@media (max-width: 992px) {
+    .subject-resource-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .subject-resource-grid { grid-template-columns: repeat(2, 1fr); }
+    .dual-tracker-layout, .report-layout, .activity-grid, .storage-options-container, .theme-picker-grid { grid-template-columns: 1fr; }
+    .activity-grid { gap: 10px; }
+    .timer { font-size: 2.5rem; }
+    .huge-username { font-size: 2.1rem; }
+}
